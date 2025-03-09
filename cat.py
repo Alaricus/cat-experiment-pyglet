@@ -2,15 +2,32 @@ import pyglet
 from pyglet.window import key
 from pyglet import font
 from enum import Enum
+import sys
+import os
 
 window = pyglet.window.Window()
 keys = key.KeyStateHandler()
 window.push_handlers(keys)
 
-pyglet.resource.path = ['assets']
+if getattr(sys, 'frozen', False):
+    # Running in a bundled executable: assets are extracted to sys._MEIPASS.
+    # See https://pyinstaller.org/en/stable/runtime-information.html#run-time-information
+    base_path = sys._MEIPASS
+else:
+    # Running in a normal environment.
+    base_path = os.path.abspath(".")
+
+# Construct the full path to the assets folder.
+assets_path = os.path.join(base_path, 'assets')
+
+# Set the resource path for pyglet.
+pyglet.resource.path = [assets_path]
+
+# pyglet.resource.path = ['assets']
 pyglet.resource.reindex()
 
-font.add_file('./assets/sourgummy.ttf')
+font_file = os.path.join(assets_path, 'sourgummy.ttf')
+font.add_file(font_file)
 sour_gummy = font.load('Sour Gummy')
 
 #event_logger = pyglet.window.event.WindowEventLogger()
