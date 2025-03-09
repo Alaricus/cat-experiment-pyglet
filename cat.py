@@ -144,15 +144,15 @@ def on_draw():
   elif keys[key.D]:
     cat.direction = CatDirection.EAST
     if cat.x < window.width - 96:
-      x_change += cat
+      x_change += cat.cat_walk_speed
   elif keys[key.W]:
     cat.direction = CatDirection.NORTH
     if cat.y < window.height - 96:
-      y_change += cat
+      y_change += cat.cat_walk_speed
   elif keys[key.S]:
     cat.direction = CatDirection.SOUTH
     if cat.y > 0:
-      y_change -= cat
+      y_change -= cat.cat_walk_speed
 
   if keys[key.A] or keys[key.D] or keys[key.W] or keys[key.S]:
     if keys[key.LSHIFT]:
